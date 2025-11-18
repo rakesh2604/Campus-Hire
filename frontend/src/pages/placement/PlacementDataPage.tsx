@@ -294,7 +294,7 @@ export const PlacementDataPage: React.FC = () => {
                             {['pending', 'scheduled', 'completed', 'passed', 'failed'].map((status) => (
                               <button
                                 key={status}
-                                onClick={() => handleUpdateRound(app.id, editingRound.roundNumber, status)}
+                                onClick={() => handleUpdateRound(app.id, editingRound.roundNumber, status as 'pending' | 'scheduled' | 'completed' | 'passed' | 'failed')}
                                 className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700"
                               >
                                 Mark as {status}

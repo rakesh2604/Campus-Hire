@@ -7,6 +7,8 @@ export interface IJob extends Document {
   location: string
   type: 'full-time' | 'part-time' | 'contract' | 'internship'
   workMode?: 'office' | 'remote' | 'hybrid'
+  hasBondAgreement?: boolean
+  bondDetails?: string
   salary?: {
     min: number
     max: number
@@ -76,6 +78,13 @@ const JobSchema = new Schema<IJob>(
     workMode: {
       type: String,
       enum: ['office', 'remote', 'hybrid'],
+    },
+    hasBondAgreement: {
+      type: Boolean,
+      default: false,
+    },
+    bondDetails: {
+      type: String,
     },
     experienceLevel: {
       type: String,

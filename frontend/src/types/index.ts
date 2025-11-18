@@ -1,7 +1,7 @@
-import { User, Job, Application, ApiResponse } from '../../shared/types/index'
+import type { User, Job, Application, ApiResponse, DismissedJob } from '../../../shared/types/index'
 
 // Re-export shared types
-export type { User, Job, Application, ApiResponse }
+export type { User, Job, Application, ApiResponse, DismissedJob }
 
 // Frontend-specific types
 export interface AuthState {

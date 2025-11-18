@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { ApiResponse } from '../../shared/types'
+import { ApiResponse } from '../types'
 import { getConnectionHealth, isDatabaseReady } from '../config/database'
 import mongoose from 'mongoose'
 
@@ -13,7 +13,7 @@ export const getHealth = (_req: Request, res: Response): void => {
     readyState: mongoose.connection.readyState,
     readyStateText: dbHealth.state,
     host: dbHealth.host || 'N/A',
-    port: dbHealth.port || 'N/A',
+    port: typeof dbHealth.port === 'number' ? dbHealth.port : undefined,
     database: dbHealth.database || 'N/A',
     hasMongoDBUri: !!process.env.MONGODB_URI,
     mongoDBUriPreview: process.env.MONGODB_URI 

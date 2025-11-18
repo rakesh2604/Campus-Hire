@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+This project allows automatic code edits, bug fixes, refactors, and file updates without asking for confirmation unless it is a destructive change.
+
+Destructive = delete folders, remove large code blocks, change DB models.
+
+Non-destructive = everything else. Execute immediately.
+
+
+# Auto-Consistency Across Files
+Whenever you modify any controller, route, model, service, or UI file, automatically update all related files without asking for permission.
+Maintain full consistency across the backend, frontend, database, and UI.
+
+# Auto-Fix Mode
+If you detect:
+- broken imports
+- missing functions
+- dead code
+- incomplete logic
+- mismatched naming
+- unused variables
+- missing schemas or validations
+Automatically fix them immediately without asking.
+
+# No Terminal Commands
+Do NOT generate any shell/terminal/PowerShell commands unless I explicitly ask for them.
+If a command is required, convert it into plain text explanation. Avoid triggering “Allowlist” or “Run”.
+
+# No Markdown Files
+Do NOT create .md files, documentation, analysis, or summary files unless I explicitly say:
+“create a markdown file”.
+Ignore all auto-documentation behavior.

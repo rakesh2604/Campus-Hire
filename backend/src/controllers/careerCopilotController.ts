@@ -1,12 +1,11 @@
-import { Request, Response } from 'express'
-import { body, validationResult } from 'express-validator'
+import { Response } from 'express'
+import { validationResult } from 'express-validator'
 import { JobTracker } from '../models/JobTracker'
 import { Job } from '../models/Job'
 import { User } from '../models/User'
-import { Application } from '../models/Application'
-import { ApiResponse } from '../../shared/types'
-import { RequestWithUser } from '../types'
+import { ApiResponse, RequestWithUser } from '../types'
 import { chatWithAI, AIMessage } from '../utils/aiProvider'
+import mongoose from 'mongoose'
 
 // Save job to tracker
 export const saveJobToTracker = async (
@@ -77,7 +76,7 @@ export const saveJobToTracker = async (
     }> = {
       success: true,
       data: {
-        id: tracker._id.toString(),
+        id: (tracker._id as mongoose.Types.ObjectId).toString(),
         jobId: tracker.jobId.toString(),
         status: tracker.status,
         createdAt: tracker.createdAt.toISOString(),
@@ -134,7 +133,7 @@ export const getJobTracker = async (
       success: true,
       data: {
         jobs: trackers.map((tracker) => ({
-          id: tracker._id.toString(),
+          id: (tracker._id as mongoose.Types.ObjectId).toString(),
           jobId: tracker.jobId.toString(),
           job: {
             id: (tracker.jobId as any)._id?.toString() || tracker.jobId.toString(),
@@ -474,7 +473,7 @@ export const findWhoHiring = async (
       return
     }
 
-    const { location, role, industry } = req.query
+    const { location, role } = req.query
 
     // Get active jobs matching criteria
     const query: Record<string, unknown> = { status: 'active' }
@@ -516,7 +515,7 @@ export const findWhoHiring = async (
 
       const companyData = companiesMap.get(company)!
       companyData.jobs.push({
-        id: job._id.toString(),
+        id: (job._id as mongoose.Types.ObjectId).toString(),
         title: job.title,
         location: job.location,
         type: job.type,

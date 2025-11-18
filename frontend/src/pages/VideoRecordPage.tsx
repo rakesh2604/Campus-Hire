@@ -27,7 +27,7 @@ export const VideoRecordPage: React.FC = () => {
   const [hasPermission, setHasPermission] = useState(false)
   const [recordingTime, setRecordingTime] = useState(0)
   const [hasRecorded, setHasRecorded] = useState(false)
-  const [recordedVideoBlob, setRecordedVideoBlob] = useState<Blob | null>(null)
+  const [_recordedVideoBlob, setRecordedVideoBlob] = useState<Blob | null>(null)
   const [recordedVideoUrl, setRecordedVideoUrl] = useState<string | null>(null)
   const [isVideoEnabled, setIsVideoEnabled] = useState(true)
   const [isAudioEnabled, setIsAudioEnabled] = useState(true)

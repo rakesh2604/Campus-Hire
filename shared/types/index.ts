@@ -60,6 +60,9 @@ export interface Job {
   location: string
   type: 'full-time' | 'part-time' | 'contract' | 'internship'
   workMode?: 'office' | 'remote' | 'hybrid'
+  hasBondAgreement?: boolean
+  bondDetails?: string
+  status: 'active' | 'closed' | 'draft'
   salary?: {
     min: number
     max: number
@@ -82,6 +85,13 @@ export interface Job {
   postedBy: string
   createdAt: string
   updatedAt: string
+}
+
+export interface DismissedJob {
+  id: string
+  job: Job
+  reason?: string
+  dismissedAt: string
 }
 
 export interface Application {
@@ -117,5 +127,6 @@ export interface ApiResponse<T> {
   data?: T
   error?: string
   message?: string
+  code?: string
 }
 

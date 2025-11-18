@@ -21,6 +21,35 @@ interface UpdateProfileData {
   desiredCTCMax?: number
   profilePicture?: string
   resume?: string
+  workExperiences?: Array<{
+    title: string
+    company: string
+    location?: string
+    duration?: string
+    description: string
+    startDate?: string
+    endDate?: string
+  }>
+  projects?: Array<{
+    name: string
+    description: string
+    link?: string
+    technologies?: string[]
+  }>
+  educations?: Array<{
+    degree: string
+    institution: string
+    location?: string
+    startDate?: string
+    endDate?: string
+    fieldOfStudy?: string
+  }>
+  certificates?: Array<{
+    name: string
+    issuer: string
+    date: string
+    link?: string
+  }>
 }
 
 export const useUpdateProfile = () => {

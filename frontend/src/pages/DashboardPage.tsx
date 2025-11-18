@@ -5,17 +5,6 @@ import { useCurrentUser } from '@/hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import { ProfileAvatar } from '@/components/common/ProfileAvatar'
 
-const getStatusColor = (status: string) => {
-  const colors: Record<string, string> = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    reviewed: 'bg-blue-100 text-blue-800',
-    shortlisted: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800',
-    accepted: 'bg-emerald-100 text-emerald-800',
-  }
-  return colors[status] || 'bg-gray-100 text-gray-800'
-}
-
 export const DashboardPage: React.FC = () => {
   const { data: userData, isLoading: userLoading, refetch } = useCurrentUser()
   const navigate = useNavigate()

@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import { User } from '../models/User'
 import { hashPassword, comparePassword, generateToken } from '../utils/auth'
-import { ApiResponse } from '../../shared/types'
-import { RequestWithUser } from '../types'
+import { ApiResponse, RequestWithUser } from '../types'
 import { isDatabaseReady } from '../config/database'
+import mongoose from 'mongoose'
 
 export const register = async (
   req: Request,
@@ -59,7 +59,7 @@ export const register = async (
 
     // Generate token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as mongoose.Types.ObjectId).toString(),
       email: user.email,
       role: user.role,
     })
@@ -76,7 +76,7 @@ export const register = async (
       success: true,
       data: {
         user: {
-          id: user._id.toString(),
+          id: (user._id as mongoose.Types.ObjectId).toString(),
           email: user.email,
           name: user.name,
           role: user.role,
@@ -170,7 +170,7 @@ export const login = async (
 
     // Generate token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: (user._id as mongoose.Types.ObjectId).toString(),
       email: user.email,
       role: user.role,
     })
@@ -187,7 +187,7 @@ export const login = async (
       success: true,
       data: {
         user: {
-          id: user._id.toString(),
+          id: (user._id as mongoose.Types.ObjectId).toString(),
           email: user.email,
           name: user.name,
           role: user.role,
@@ -284,7 +284,7 @@ export const getCurrentUser = async (
     }> = {
       success: true,
       data: {
-        id: user._id.toString(),
+          id: (user._id as mongoose.Types.ObjectId).toString(),
         email: user.email,
         name: user.name,
         role: user.role,

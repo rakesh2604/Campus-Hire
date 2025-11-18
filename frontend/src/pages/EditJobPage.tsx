@@ -3,7 +3,7 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useJob, useUpdateJob, useDeleteJob } from '@/hooks/useJobs'
+import { useJob, useUpdateJob, useDeleteJob, CreateJobData } from '@/hooks/useJobs'
 import { useCurrentUser } from '@/hooks/useAuth'
 import { Button } from '@/components/common/Button'
 import { showToast } from '@/utils/toast'
@@ -77,15 +77,7 @@ export const EditJobPage: React.FC = () => {
     if (!id) return
 
     try {
-      const jobData: Partial<JobFormData & {
-        salary?: { min: number; max: number; currency: string }
-        experienceRange?: { minYears: number; minMonths: number; maxYears: number; maxMonths: number }
-        responsibilities?: string[]
-        keyQualifications?: string[]
-        teamEnvironment?: string[]
-        companyCulture?: string[]
-        requirements?: string[]
-      }> = {
+      const jobData: Partial<CreateJobData> = {
         title: data.title,
         description: data.description,
         company: data.company,

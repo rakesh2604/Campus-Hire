@@ -48,12 +48,6 @@ export const ContestsPage: React.FC = () => {
     { rank: 10, name: 'ANAND SAGAR', score: 6573 },
   ]
 
-  const getRankGlow = (rank: number) => {
-    if (rank === 1) return 'ring-2 ring-green-400 shadow-green-200'
-    if (rank === 2) return 'ring-2 ring-blue-400 shadow-blue-200'
-    if (rank === 3) return 'ring-2 ring-orange-400 shadow-orange-200'
-    return ''
-  }
 
   return (
     <div className="min-h-screen bg-white">

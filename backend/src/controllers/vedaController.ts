@@ -1,7 +1,7 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import { chatWithAI, AIMessage } from '../utils/aiProvider'
-import { ApiResponse } from '../../shared/types'
+import { ApiResponse } from '../types'
 import { RequestWithUser } from '../types'
 import { VEDA_SYSTEM_PROMPT } from '../utils/vedaKnowledge'
 import { User } from '../models/User'
@@ -91,7 +91,7 @@ User Profile Context:
         role: 'system',
         content: `${VEDA_SYSTEM_PROMPT}${userContext}${featurePrompt}`,
       },
-      ...conversationHistory.map((msg) => ({
+      ...conversationHistory.map((msg: { role: string; content: string }) => ({
         role: msg.role as 'user' | 'assistant',
         content: msg.content,
       })),

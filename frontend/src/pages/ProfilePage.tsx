@@ -566,7 +566,7 @@ export const ProfilePage: React.FC = () => {
                           }
                         }
                         
-                        return contributions.map(({ intensity, day, week }, i) => {
+                        return contributions.map(({ intensity }, i) => {
                           // GitHub-like colors
                           const colors = [
                             '#ebedf0', // No contributions

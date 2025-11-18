@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { ApiResponse } from '../../shared/types'
+import { ApiResponse } from '../types'
 import { isDatabaseReady } from '../config/database'
 
 /**
@@ -7,7 +7,7 @@ import { isDatabaseReady } from '../config/database'
  * Returns 503 Service Unavailable if database is not ready
  */
 export const requireDatabase = (
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction
 ): void => {

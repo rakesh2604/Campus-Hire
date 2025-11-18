@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useCreateJob } from '@/hooks/useJobs'
+import { useCreateJob, CreateJobData } from '@/hooks/useJobs'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/common/Button'
 
@@ -48,24 +48,7 @@ export const CreateJobPage: React.FC = () => {
 
   const onSubmit = async (data: JobFormData) => {
     try {
-      const jobData: Partial<{
-        title: string
-        description: string
-        company: string
-        location: string
-        type: string
-        workMode?: string
-        aboutCompany?: string
-        experienceLevel?: string
-        salaryText?: string
-        salary?: { min: number; max: number; currency: string }
-        experienceRange?: { minYears: number; minMonths: number; maxYears: number; maxMonths: number }
-        requirements?: string[]
-        responsibilities?: string[]
-        keyQualifications?: string[]
-        teamEnvironment?: string[]
-        companyCulture?: string[]
-      }> = {
+      const jobData: CreateJobData = {
         title: data.title,
         description: data.description,
         company: data.company,

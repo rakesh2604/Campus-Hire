@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { PlacedAIPlan, UserGoal, PlacedAIIntensity } from '../models/PlacedAI'
 import { RequestWithUser } from '../types'
 
@@ -134,7 +134,7 @@ export const updatePlanItem = async (req: RequestWithUser, res: Response): Promi
       return
     }
 
-    const item = plan.items.id(itemId)
+    const item = plan.items.find((i) => i._id?.toString() === itemId)
     if (!item) {
       res.status(404).json({ success: false, message: 'Plan item not found' })
       return

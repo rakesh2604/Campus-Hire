@@ -18,10 +18,16 @@ export interface IUser extends Document {
   companyType?: string[]
   linkedin?: string
   github?: string
+  phone?: string // Phone number for WhatsApp notifications
   currentCTC?: number
   desiredCTCMin?: number
   desiredCTCMax?: number
   resume?: string
+  dismissedJobs?: Array<{
+    jobId: mongoose.Types.ObjectId
+    reason?: string
+    dismissedAt: Date
+  }>
   // Arrays for profile sections
   workExperiences?: Array<{
     title: string
@@ -122,6 +128,9 @@ const UserSchema = new Schema<IUser>(
     github: {
       type: String,
     },
+    phone: {
+      type: String,
+    },
     currentCTC: {
       type: Number,
     },
@@ -134,6 +143,20 @@ const UserSchema = new Schema<IUser>(
     resume: {
       type: String,
     },
+    dismissedJobs: [{
+      jobId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Job',
+        required: true,
+      },
+      reason: {
+        type: String,
+      },
+      dismissedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }],
     // Arrays for profile sections
     workExperiences: [{
       title: String,

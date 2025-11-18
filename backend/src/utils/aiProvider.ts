@@ -59,10 +59,12 @@ export const chatWithOpenAI = async (messages: AIMessage[]): Promise<string> => 
     
     const response = await client.chat.completions.create({
       model: process.env.OPENAI_MODEL || 'gpt-4o-mini', // Use gpt-4o-mini for cost-effective, or gpt-4o for better quality
-      messages: messages.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      })),
+      messages: messages
+        .filter((msg) => msg.role !== 'system')
+        .map((msg) => ({
+          role: msg.role as 'user' | 'assistant',
+          content: msg.content,
+        })),
       max_tokens: 4096,
       temperature: 0.7,
     })
@@ -102,7 +104,7 @@ export const chatWithClaude = async (messages: AIMessage[]): Promise<string> => 
       model: 'claude-3-opus-20240229',
       max_tokens: 4096,
       messages: messages.map((msg) => ({
-        role: msg.role,
+        role: msg.role === 'system' ? 'user' : (msg.role as 'user' | 'assistant'),
         content: msg.content,
       })),
     })

@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import { User } from '../models/User'
 import { hashPassword } from '../utils/auth'
-import { ApiResponse } from '../../shared/types'
-import { RequestWithUser } from '../types'
+import { ApiResponse, RequestWithUser } from '../types'
+import mongoose from 'mongoose'
 
 export const updateProfile = async (
   req: RequestWithUser,
@@ -69,7 +69,7 @@ export const updateProfile = async (
     if (name !== undefined) user.name = name
     if (email !== undefined) {
       // Check if email is already taken by another user
-      const existingUser = await User.findOne({ email, _id: { $ne: user._id } })
+      const existingUser = await User.findOne({ email, _id: { $ne: user._id as mongoose.Types.ObjectId } })
       if (existingUser) {
         const response: ApiResponse<never> = {
           success: false,
@@ -209,7 +209,7 @@ export const updateProfile = async (
     }> = {
       success: true,
       data: {
-        id: user._id.toString(),
+        id: (user._id as mongoose.Types.ObjectId).toString(),
         email: user.email,
         name: user.name,
         role: user.role,

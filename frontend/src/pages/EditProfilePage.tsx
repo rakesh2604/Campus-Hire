@@ -91,7 +91,7 @@ export const EditProfilePage: React.FC = () => {
     }
   }, [user])
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProfileFormData>({
+  const { register, handleSubmit, formState: { errors: _errors }, reset } = useForm<ProfileFormData>({
     defaultValues: {
       name: user?.name || '',
       workExperience: user?.workExperience || 0,

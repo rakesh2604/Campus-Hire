@@ -1,5 +1,5 @@
 // Re-export shared types
-export * from '../../../shared/types/index'
+export type { ApiResponse, User, Job, Application, DismissedJob } from '../../../shared/types/index'
 
 // Backend-specific types
 export interface JwtPayload {
@@ -8,7 +8,9 @@ export interface JwtPayload {
   role: string
 }
 
-export interface RequestWithUser extends Express.Request {
+import { Request } from 'express'
+
+export interface RequestWithUser extends Request {
   user?: {
     userId: string
     email: string

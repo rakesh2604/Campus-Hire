@@ -10,7 +10,7 @@ import { LoadingSpinner } from './components/common/LoadingSpinner'
 const LoginPage = lazy(() => import('./pages/LoginPage').then(m => ({ default: m.LoginPage })))
 const RegisterPage = lazy(() => import('./pages/RegisterPage').then(m => ({ default: m.RegisterPage })))
 const DashboardPage = lazy(() => import('./pages/DashboardPage').then(m => ({ default: m.DashboardPage })))
-const JobsPage = lazy(() => import('./pages/JobsPage').then(m => ({ default: m.JobsPage })))
+const JobsPage = lazy(() => import('./pages/JobsPage'))
 const JobDetailPage = lazy(() => import('./pages/JobDetailPage').then(m => ({ default: m.JobDetailPage })))
 const CreateJobPage = lazy(() => import('./pages/CreateJobPage').then(m => ({ default: m.CreateJobPage })))
 const EditJobPage = lazy(() => import('./pages/EditJobPage').then(m => ({ default: m.EditJobPage })))

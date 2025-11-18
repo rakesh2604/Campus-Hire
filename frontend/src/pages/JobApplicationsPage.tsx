@@ -7,7 +7,6 @@ import { useJob } from '@/hooks/useJobs'
 import { useCurrentUser } from '@/hooks/useAuth'
 import { Button } from '@/components/common/Button'
 import { showToast } from '@/utils/toast'
-import { Application } from '@/types'
 
 const getStatusColor = (status: string) => {
   const colors: Record<string, string> = {
@@ -50,9 +49,21 @@ export const JobApplicationsPage: React.FC = () => {
   const handleStatusUpdate = async (applicationId: string, newStatus: string) => {
     try {
       await updateStatus.mutateAsync({ id: applicationId, status: newStatus })
-      showToast('Application status updated successfully', 'success')
-    } catch (error) {
-      showToast('Failed to update application status', 'error')
+      if (newStatus === 'shortlisted') {
+        showToast('Application shortlisted! Student will be notified via email and WhatsApp.', 'success')
+      } else {
+        showToast('Application status updated successfully', 'success')
+      }
+    } catch (error: any) {
+      // Show detailed error message if available
+      const errorMessage = error?.response?.data?.error || error?.message || 'Failed to update application status'
+      showToast(errorMessage, 'error')
+      
+      // If validation error, show additional details
+      if (error?.response?.data?.data?.validation) {
+        const validation = error.response.data.data.validation
+        console.warn('Validation failed:', validation)
+      }
     }
   }
 

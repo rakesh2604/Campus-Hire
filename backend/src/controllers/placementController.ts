@@ -1,12 +1,12 @@
-import { Request, Response } from 'express'
-import { body, validationResult, query } from 'express-validator'
+import { Response } from 'express'
+import { validationResult } from 'express-validator'
 import { User } from '../models/User'
 import { Job } from '../models/Job'
 import { Application } from '../models/Application'
 import { Placement } from '../models/Placement'
-import { ApiResponse } from '../../shared/types'
-import { RequestWithUser } from '../types'
+import { ApiResponse, RequestWithUser } from '../types'
 import { hashPassword } from '../utils/auth'
+import mongoose from 'mongoose'
 
 // Get eligible students (candidates) with batch filtering
 export const getEligibleStudents = async (
@@ -57,7 +57,7 @@ export const getEligibleStudents = async (
           .sort({ createdAt: -1 })
 
         return {
-          id: student._id.toString(),
+          id: (student._id as mongoose.Types.ObjectId).toString(),
           name: student.name,
           email: student.email,
           graduationYear: student.graduationYear,
@@ -72,7 +72,7 @@ export const getEligibleStudents = async (
           activePlacements: activePlacements.length,
           selectedCount: selectedPlacements.length,
           applications: applications.map((app) => ({
-            id: app._id.toString(),
+            id: (app._id as mongoose.Types.ObjectId).toString(),
             jobId: app.jobId.toString(),
             job: {
               id: (app.jobId as any)._id?.toString() || app.jobId.toString(),
@@ -239,7 +239,7 @@ export const getPlacementDataByBatch = async (
         batch: batch as string,
         stats,
         placements: placements.map((p) => ({
-          id: p._id.toString(),
+          id: (p._id as mongoose.Types.ObjectId).toString(),
           student: {
             id: (p.studentId as any)._id?.toString() || p.studentId.toString(),
             name: (p.studentId as any).name || 'Unknown',
@@ -274,7 +274,7 @@ export const getPlacementDataByBatch = async (
           createdAt: p.createdAt.toISOString(),
         })),
         applications: applications.map((a) => ({
-          id: a._id.toString(),
+          id: (a._id as mongoose.Types.ObjectId).toString(),
           student: {
             id: (a.candidateId as any)._id?.toString() || a.candidateId.toString(),
             name: (a.candidateId as any).name || 'Unknown',
@@ -483,7 +483,7 @@ export const updateRoundStatus = async (
       success: true,
       data: {
         application: {
-          id: application._id.toString(),
+          id: (application._id as mongoose.Types.ObjectId).toString(),
           currentRound: application.currentRound || 1,
           totalRounds: application.totalRounds || 3,
           status: application.status,
@@ -617,7 +617,7 @@ export const getPlacementMembers = async (
       success: true,
       data: {
         members: members.map((m) => ({
-          id: m._id.toString(),
+          id: (m._id as mongoose.Types.ObjectId).toString(),
           name: m.name,
           email: m.email,
           role: m.role as 'placement' | 'admin',
@@ -700,7 +700,7 @@ export const createPlacementMember = async (
       success: true,
       data: {
         member: {
-          id: user._id.toString(),
+          id: (user._id as mongoose.Types.ObjectId).toString(),
           name: user.name,
           email: user.email,
           role: user.role,
@@ -861,7 +861,7 @@ export const registerStudent = async (
       success: true,
       data: {
         student: {
-          id: student._id.toString(),
+          id: (student._id as mongoose.Types.ObjectId).toString(),
           name: student.name,
           email: student.email,
           graduationYear: student.graduationYear,
@@ -954,7 +954,7 @@ export const generateDummyStudents = async (
 
       await student.save()
       createdStudents.push({
-        id: student._id.toString(),
+          id: (student._id as mongoose.Types.ObjectId).toString(),
         name: student.name,
         email: student.email,
         graduationYear: student.graduationYear,
@@ -1061,7 +1061,7 @@ export const importStudentsFromCSV = async (
 
         await student.save()
         createdStudents.push({
-          id: student._id.toString(),
+          id: (student._id as mongoose.Types.ObjectId).toString(),
           name: student.name,
           email: student.email,
           graduationYear: student.graduationYear,

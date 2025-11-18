@@ -10,8 +10,11 @@ export const useHealthCheck = () => {
   return useQuery<ApiResponse<HealthResponse>>({
     queryKey: ['health'],
     queryFn: async () => {
-      const response = await apiClient.get<ApiResponse<HealthResponse>>('/health')
-      return response.data
+      // Health endpoint is at /api/health, not /api/v1/health
+      const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+      const response = await fetch(`${baseURL}/api/health`)
+      const data = await response.json()
+      return data
     },
   })
 }

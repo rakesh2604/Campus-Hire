@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useCurrentUser, useLogout } from '@/hooks/useAuth'
 import { ProfileAvatar } from '@/components/common/ProfileAvatar'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import apiClient from '@/api/axios'
 import { showToast } from '@/utils/toast'
 
@@ -13,7 +13,6 @@ export const Navbar: React.FC = () => {
   const logout = useLogout()
   const navigate = useNavigate()
   const location = useLocation()
-  const queryClient = useQueryClient()
   const user = data?.data
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -94,12 +93,13 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
-  const NavLink: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({ to, children, className = '' }) => {
+  const NavLink: React.FC<{ to: string; children: React.ReactNode; className?: string; onClick?: () => void }> = ({ to, children, className = '', onClick }) => {
     const isActive = isActiveRoute(to)
     return (
       <Link
         to={to}
         className={`${className} ${isActive ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'} transition-all duration-300 font-medium hover:scale-105`}
+        onClick={onClick}
       >
         {children}
       </Link>

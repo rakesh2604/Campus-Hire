@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
-import { RequestWithUser } from '../types'
-import { ApiResponse } from '../../shared/types'
+import { RequestWithUser, ApiResponse } from '../types'
 import { isDatabaseReady } from '../config/database'
 
 /**
@@ -42,9 +41,11 @@ export const importLinkedInProfile = async (
     // const linkedinData = await fetchLinkedInProfile(accessToken)
     
     // Simulated LinkedIn profile data
+    // Note: req.user doesn't have 'name', using email as fallback
+    const userEmail = req.user.email || 'user@example.com'
     const linkedinProfileData = {
-      firstName: req.user.name?.split(' ')[0] || 'John',
-      lastName: req.user.name?.split(' ').slice(1).join(' ') || 'Doe',
+      firstName: userEmail.split('@')[0] || 'John',
+      lastName: 'Doe',
       headline: 'Software Engineer | Full Stack Developer',
       summary: 'Experienced software engineer with expertise in web development, cloud technologies, and agile methodologies. Passionate about building scalable applications and solving complex problems.',
       location: {
@@ -139,7 +140,7 @@ export const importLinkedInProfile = async (
  * In production, this would generate the actual LinkedIn OAuth URL
  */
 export const getLinkedInAuthUrl = async (
-  req: Request,
+  _req: Request,
   res: Response
 ): Promise<void> => {
   try {

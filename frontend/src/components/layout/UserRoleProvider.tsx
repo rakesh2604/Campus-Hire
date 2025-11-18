@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useCurrentUser } from '@/hooks/useAuth'
 
 export const UserRoleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { data: userData, isLoading } = useCurrentUser()
+  const { data: userData } = useCurrentUser()
   const user = userData?.data
   
   // Don't block rendering - always render children immediately

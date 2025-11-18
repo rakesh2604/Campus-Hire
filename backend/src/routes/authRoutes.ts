@@ -14,7 +14,7 @@ const router = Router()
 
 router.post('/register', validateRegister, register)
 router.post('/login', validateLogin, login)
-router.get('/linkedin/auth-url', getLinkedInAuthUrl)
+router.get('/linkedin/auth-url', getLinkedInAuthUrl as any)
 router.post('/linkedin/import', authenticateToken, importLinkedInProfile)
 router.get('/me', authenticateToken, getCurrentUser)
 router.put('/profile', authenticateToken, validateUpdateProfile, updateProfile)

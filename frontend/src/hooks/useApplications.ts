@@ -1,14 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import apiClient from '@/api/axios'
-import { ApiResponse, Application } from '@/types'
+import { ApiResponse, Application, DismissedJob } from '@/types'
 
 interface ApplyToJobData {
   resume?: string
   coverLetter?: string
 }
 
+interface ApplicationWithCandidate extends Application {
+  candidate?: {
+    id: string
+    name: string
+    email: string
+  }
+}
+
 interface ApplicationResponse {
-  applications: Application[]
+  applications: ApplicationWithCandidate[]
+  dismissedJobs?: DismissedJob[]
 }
 
 export const useApplyToJob = () => {
@@ -28,6 +37,8 @@ export const useApplyToJob = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myApplications'] })
+      queryClient.invalidateQueries({ queryKey: ['jobs'] })
+      queryClient.invalidateQueries({ queryKey: ['job'] })
     },
   })
 }
@@ -42,6 +53,9 @@ export const useMyApplications = (options?: { enabled?: boolean }) => {
       return response.data
     },
     enabled: options?.enabled !== false, // Default to true if not specified
+    refetchOnWindowFocus: true, // Refetch when window regains focus
+    refetchInterval: 30000, // Refetch every 30 seconds for real-time updates
+    staleTime: 10000, // Consider data stale after 10 seconds
   })
 }
 
@@ -78,6 +92,29 @@ export const useUpdateApplicationStatus = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobApplications'] })
+      queryClient.invalidateQueries({ queryKey: ['myApplications'] })
+      queryClient.invalidateQueries({ queryKey: ['jobs'] })
+    },
+  })
+}
+
+export const useDismissJob = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation<
+    ApiResponse<{ message: string }>,
+    Error,
+    { jobId: string; reason?: string }
+  >({
+    mutationFn: async ({ jobId, reason }) => {
+      const response = await apiClient.post<ApiResponse<{ message: string }>>(
+        `/applications/jobs/${jobId}/dismiss`,
+        { reason }
+      )
+      return response.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['jobs'] })
       queryClient.invalidateQueries({ queryKey: ['myApplications'] })
     },
   })

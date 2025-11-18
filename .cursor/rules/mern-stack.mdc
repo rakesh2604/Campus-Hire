@@ -1,0 +1,51 @@
+---
+alwaysApply: true
+---
+# Tech Stack
+This project uses:
+- Node.js + Express backend
+- MongoDB + Mongoose (or Prisma if SQL)
+- React (or Next.js if applicable)
+- JWT authentication
+- REST API conventions
+
+# Folder Structure
+Backend:
+- /src
+  - /models
+  - /controllers
+  - /routes
+  - /middlewares
+  - /services
+  - /utils
+  - /config
+
+Frontend:
+- /src
+  - /components
+  - /pages or /routes
+  - /hooks
+  - /context
+  - /services
+  - /utils
+
+# Conventions
+- camelCase for variables/functions
+- PascalCase for components/models
+- All API responses follow { success, data, message }
+- Use async/await everywhere
+- Error handling through middleware
+- Keep controllers thin; move logic to services
+- Reusable form components
+
+# Database
+- MongoDB
+- Connections through /config/db.js
+- All models in /models with schemas in separate files
+
+# Auth
+- JWT stored in httpOnly cookies
+- Auth middleware required for protected routes
+
+# API Versioning
+Base URL: /api/v1
