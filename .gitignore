@@ -73,3 +73,5 @@ source-map-explorer-output.json
 
 sendgrid.env
 twilio.env
+#Cursor
+.cursor
